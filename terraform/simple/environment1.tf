@@ -9,7 +9,22 @@ resource "azurerm_resource_group" "aksrg" {
     CostCenter  = "Unibake"
   }
 }
+# https://www.terraform.io/docs/providers/azurerm/r/key_vault.html
+resource "azurerm_key_vault" "aksvault" {
+  name                        = "kv-${var.dns_prefix}-${random_integer.random_int.result}"
+  location                    = azurerm_resource_group.aksrg.location
+  resource_group_name         = azurerm_resource_group.aksrg.name
+  enabled_for_disk_encryption = false
+  tenant_id                   = var.tenant_id
 
+  sku_name = "standard"
+
+  tags = {
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
+  }
+}
 # https://www.terraform.io/docs/providers/azurerm/d/virtual_network.html
 resource "azurerm_virtual_network" "kubevnet" {
   name                = "vnet-${var.dns_prefix}-${random_integer.random_int.result}"
@@ -248,23 +263,6 @@ resource "azurerm_redis_cache" "aksredis" {
   redis_configuration {
   }
   
-  tags = {
-    environment = "Test"
-    project     = "DDS"
-    CostCenter  = "Unibake"
-  }
-}
-
-# https://www.terraform.io/docs/providers/azurerm/r/key_vault.html
-resource "azurerm_key_vault" "aksvault" {
-  name                        = "kv-${var.dns_prefix}-${random_integer.random_int.result}"
-  location                    = azurerm_resource_group.aksrg.location
-  resource_group_name         = azurerm_resource_group.aksrg.name
-  enabled_for_disk_encryption = false
-  tenant_id                   = var.tenant_id
-
-  sku_name = "standard"
-
   tags = {
     environment = "Test"
     project     = "DDS"
