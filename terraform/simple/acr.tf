@@ -47,7 +47,7 @@ resource "azurerm_role_assignment" "azdoacrrole" {
 # https://www.terraform.io/docs/providers/azurerm/r/container_registry.html
 
 resource "azurerm_container_registry" "aksacr" {
-  name                     = "acrubidds"
+  name                     = "acrubidds001"
   resource_group_name      = azurerm_resource_group.acrrg.name
   location                 = azurerm_resource_group.acrrg.location
   sku                      = "Standard"

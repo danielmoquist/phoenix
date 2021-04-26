@@ -357,7 +357,7 @@ resource "azurerm_key_vault_secret" "public_ip" {
 }
 
 resource "azurerm_key_vault_secret" "appgw_public_ip" {
-  name         = "appgw-fqdn"
+  name         = "appgw-fqdn" #52.143.23.182 (appgwpip-ubi-dds-test-28)
   value        = "${azurerm_public_ip.appgw_ip.ip_address}.xip.io"
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -549,7 +549,7 @@ provider "helm" {
 # https://www.terraform.io/docs/providers/helm/release.html
 resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
-  repository = "https://kubernetes-charts.storage.googleapis.com" 
+  repository = "https://charts.helm.sh/stable" 
   chart      = "nginx-ingress"
   namespace  = "nginx"
   force_update = "true"
