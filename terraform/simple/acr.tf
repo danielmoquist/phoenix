@@ -11,13 +11,13 @@ provider "azurerm" {
 
 # random value
 resource "random_integer" "random_int" {
-  min = 100
+  min = 000
   max = 999
 }
 
 # https://www.terraform.io/docs/providers/azurerm/d/resource_group.html
 resource "azurerm_resource_group" "acrrg" {
-  name     = var.resource_group_name
+  name     = "${var.resource_group_name}_${random_integer.random_int.result}"
   location = var.location
     
   tags = {
