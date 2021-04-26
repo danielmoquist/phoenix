@@ -427,7 +427,7 @@ resource "azurerm_kubernetes_cluster" "akstf" {
     admin_username = "phoenix"
 
     ssh_key {
-      key_data = file("${var.ssh_public_key}")
+      key_data = file(var.ssh_public_key)
     }
   }
 
@@ -519,7 +519,7 @@ provider "kubernetes" {
 # https://www.terraform.io/docs/providers/helm/index.html
 provider "helm" {
   kubernetes {
-    load_config_file = false
+    #load_config_file = false (Could not be there, throws error)
     host                   = azurerm_kubernetes_cluster.akstf.kube_config.0.host
     client_certificate     = base64decode(azurerm_kubernetes_cluster.akstf.kube_config.0.client_certificate)
     client_key             = base64decode(azurerm_kubernetes_cluster.akstf.kube_config.0.client_key)
