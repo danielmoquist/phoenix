@@ -4,21 +4,23 @@ resource "azurerm_resource_group" "aksrg" {
   location = var.location
     
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
 # https://www.terraform.io/docs/providers/azurerm/d/virtual_network.html
 resource "azurerm_virtual_network" "kubevnet" {
-  name                = "${var.dns_prefix}-${random_integer.random_int.result}-vnet"
+  name                = "vnet-${var.dns_prefix}-${random_integer.random_int.result}"
   address_space       = ["10.0.0.0/20"]
   location            = azurerm_resource_group.aksrg.location
   resource_group_name = azurerm_resource_group.aksrg.name
 
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -60,7 +62,7 @@ resource "azurerm_subnet" "aksnet" {
 }
 
 resource "azurerm_public_ip" "appgw_ip" {
-  name                = "${var.dns_prefix}-${random_integer.random_int.result}-appgwpip"
+  name                = "appgwpip-${var.dns_prefix}-${random_integer.random_int.result}"
   resource_group_name = azurerm_resource_group.aksrg.name
   location            = azurerm_resource_group.aksrg.location
   allocation_method   = "Static"
@@ -69,7 +71,7 @@ resource "azurerm_public_ip" "appgw_ip" {
 
 # https://www.terraform.io/docs/providers/azurerm/r/application_gateway.html
 resource "azurerm_application_gateway" "appgw" {
-  name                = "${var.dns_prefix}-${random_integer.random_int.result}-appgw"
+  name                = "appgw-${var.dns_prefix}-${random_integer.random_int.result}"
   resource_group_name = azurerm_resource_group.aksrg.name
   location            = azurerm_resource_group.aksrg.location
 
@@ -144,18 +146,19 @@ resource "azurerm_key_vault_secret" "tfm-blue-ip" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
 resource "azurerm_public_ip" "tfm-blue" {
-  name                         = "tfm-blue"
+  name                         = "pip-tfm-blue"
   location                     = azurerm_kubernetes_cluster.akstf.location
   resource_group_name          = azurerm_kubernetes_cluster.akstf.node_resource_group
   allocation_method            = "Static"
   sku                          = "Standard"
-  domain_name_label            = "${var.dns_prefix}-${random_integer.random_int.result}-blue"
+  domain_name_label            = "blue-${var.dns_prefix}-${random_integer.random_int.result}"
 }
 
 resource "azurerm_key_vault_secret" "tfm-green-ip" {
@@ -164,28 +167,29 @@ resource "azurerm_key_vault_secret" "tfm-green-ip" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
 resource "azurerm_public_ip" "tfm-green" {
-  name                         = "tfm-green"
+  name                         = "pip-tfm-green"
   location                     = azurerm_kubernetes_cluster.akstf.location
   resource_group_name          = azurerm_kubernetes_cluster.akstf.node_resource_group
   allocation_method            = "Static"
   sku                          = "Standard"
-  domain_name_label            = "${var.dns_prefix}-${random_integer.random_int.result}-green"
+  domain_name_label            = "green-${var.dns_prefix}-${random_integer.random_int.result}"
 }
 
 # https://www.terraform.io/docs/providers/azurerm/r/traffic_manager_profile.html
 resource "azurerm_traffic_manager_profile" "tfmprofile" {
-  name                   = "${var.dns_prefix}-${random_integer.random_int.result}tfm"
+  name                   = "tfm-${var.dns_prefix}-${random_integer.random_int.result}"
   resource_group_name    = azurerm_resource_group.aksrg.name
   traffic_routing_method = "Weighted"
 
   dns_config {
-    relative_name = "${var.dns_prefix}-${random_integer.random_int.result}tfm"
+    relative_name = "tfm-${var.dns_prefix}-${random_integer.random_int.result}"
     ttl           = 100
   }
 
@@ -199,8 +203,9 @@ resource "azurerm_traffic_manager_profile" "tfmprofile" {
   }
 
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -211,27 +216,29 @@ resource "azurerm_key_vault_secret" "tfm_name" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
 #https://www.terraform.io/docs/providers/azurerm/r/application_insights.html
 resource "azurerm_application_insights" "aksainsights" {
-  name                = "${var.dns_prefix}-${random_integer.random_int.result}-ai"
+  name                = "ai-${var.dns_prefix}-${random_integer.random_int.result}"
   application_type    = "Node.JS"
   location            = "West Europe"
   resource_group_name = azurerm_resource_group.aksrg.name
 
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
 # https://www.terraform.io/docs/providers/azurerm/r/redis_cache.html
 resource "azurerm_redis_cache" "aksredis" {
-  name                = "${var.dns_prefix}-${random_integer.random_int.result}-redis"
+  name                = "redis-${var.dns_prefix}-${random_integer.random_int.result}"
   location            = azurerm_resource_group.aksrg.location
   resource_group_name = azurerm_resource_group.aksrg.name
   capacity            = 0
@@ -242,14 +249,15 @@ resource "azurerm_redis_cache" "aksredis" {
   }
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
 # https://www.terraform.io/docs/providers/azurerm/r/key_vault.html
 resource "azurerm_key_vault" "aksvault" {
-  name                        = "${var.dns_prefix}-${random_integer.random_int.result}-vault"
+  name                        = "kv-${var.dns_prefix}-${random_integer.random_int.result}"
   location                    = azurerm_resource_group.aksrg.location
   resource_group_name         = azurerm_resource_group.aksrg.name
   enabled_for_disk_encryption = false
@@ -258,8 +266,9 @@ resource "azurerm_key_vault" "aksvault" {
   sku_name = "standard"
 
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -296,8 +305,9 @@ resource "azurerm_key_vault_secret" "appinsights_secret" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -307,8 +317,9 @@ resource "azurerm_key_vault_secret" "redis_host_secret" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -318,8 +329,9 @@ resource "azurerm_key_vault_secret" "redis_access_secret" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -329,8 +341,9 @@ resource "azurerm_key_vault_secret" "acrname_secret" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -340,8 +353,9 @@ resource "azurerm_key_vault_secret" "public_ip" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -351,8 +365,9 @@ resource "azurerm_key_vault_secret" "appgw_public_ip" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -362,8 +377,9 @@ resource "azurerm_key_vault_secret" "phoenix-namespace" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -373,8 +389,9 @@ resource "azurerm_key_vault_secret" "aks-name" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -384,21 +401,23 @@ resource "azurerm_key_vault_secret" "aks-group" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
 # https://www.terraform.io/docs/providers/azurerm/d/log_analytics_workspace.html
 resource "azurerm_log_analytics_workspace" "akslogs" {
-  name                = "${var.dns_prefix}-${random_integer.random_int.result}-lga"
+  name                = "log-${var.dns_prefix}-${random_integer.random_int.result}"
   location            = azurerm_resource_group.aksrg.location
   resource_group_name = azurerm_resource_group.aksrg.name
   sku                 = "PerGB2018"
 
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
@@ -417,12 +436,12 @@ resource "azurerm_log_analytics_solution" "akslogs" {
 
 # https://www.terraform.io/docs/providers/azurerm/d/kubernetes_cluster.html
 resource "azurerm_kubernetes_cluster" "akstf" {
-  name                = "${var.dns_prefix}-${random_integer.random_int.result}"
+  name                = "aks-${var.dns_prefix}-${random_integer.random_int.result}"
   location            = azurerm_resource_group.aksrg.location
   resource_group_name = azurerm_resource_group.aksrg.name
   dns_prefix          = var.dns_prefix
   # kubernetes_version  = var.kubernetes_version
-  node_resource_group = "${azurerm_resource_group.aksrg.name}_nodes_${azurerm_resource_group.aksrg.location}"
+  node_resource_group = "${azurerm_resource_group.aksrg.name}_nodes"
   linux_profile {
     admin_username = "phoenix"
 
@@ -473,14 +492,15 @@ resource "azurerm_kubernetes_cluster" "akstf" {
   }
 
   tags = {
-    environment = var.environment
-    project     = "phoenix"
+    environment = "Test"
+    project     = "DDS"
+    CostCenter  = "Unibake"
   }
 }
 
 # Create Static Public IP Address to be used by Nginx Ingress
 resource "azurerm_public_ip" "nginx_ingress" {
-  name                         = "nginx-ingress-pip"
+  name                         = "pip-nginx-ingress"
   location                     = azurerm_kubernetes_cluster.akstf.location
   resource_group_name          = azurerm_kubernetes_cluster.akstf.node_resource_group
   allocation_method            = "Static"
@@ -491,12 +511,12 @@ resource "azurerm_public_ip" "nginx_ingress" {
 }
 
 resource "azurerm_public_ip" "nginx_ingress-stage" {
-  name                         = "nginx-ingress-pip-stage"
+  name                         = "pip-stage-nginx-ingress"
   location                     = azurerm_kubernetes_cluster.akstf.location
   resource_group_name          = azurerm_kubernetes_cluster.akstf.node_resource_group
   allocation_method            = "Static"
   sku                          = "Standard"
-  domain_name_label            = "${var.dns_prefix}-${random_integer.random_int.result}-stage"
+  domain_name_label            = "stage-${var.dns_prefix}-${random_integer.random_int.result}"
 
   depends_on = [azurerm_kubernetes_cluster.akstf]
 }
