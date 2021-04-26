@@ -156,10 +156,10 @@ resource "azurerm_application_gateway" "appgw" {
 }
 
 resource "azurerm_key_vault_secret" "tfm-blue-ip" {
+  depends_on   = azurerm_key_vault.aksvault
   name         = "tfm-blue-ip"
   value        = azurerm_public_ip.tfm-blue.ip_address
   key_vault_id = azurerm_key_vault.aksvault.id
-  
   tags = {
     environment = "Test"
     project     = "DDS"
@@ -227,6 +227,7 @@ resource "azurerm_traffic_manager_profile" "tfmprofile" {
 # https://www.terraform.io/docs/providers/azurerm/r/key_vault_secret.html
 resource "azurerm_key_vault_secret" "tfm_name" {
   name         = "tfm-name"
+  depends_on   = azurerm_key_vault.aksvault
   value        = azurerm_traffic_manager_profile.tfmprofile.name
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -272,8 +273,9 @@ resource "azurerm_redis_cache" "aksredis" {
 
 # https://www.terraform.io/docs/providers/azurerm/r/key_vault_access_policy.html
 resource "azurerm_key_vault_access_policy" "aksvault_policy_app" {
+  depends_on   = azurerm_key_vault.aksvault
   key_vault_id = azurerm_key_vault.aksvault.id
-
+  
   tenant_id = var.tenant_id
   object_id = var.azdo_service_principal_objectid
 
@@ -284,6 +286,7 @@ resource "azurerm_key_vault_access_policy" "aksvault_policy_app" {
 
 # https://www.terraform.io/docs/providers/azurerm/r/key_vault_access_policy.html
 resource "azurerm_key_vault_access_policy" "aksvault_policy_forme" {
+  depends_on   = azurerm_key_vault.aksvault
   key_vault_id = azurerm_key_vault.aksvault.id
 
   tenant_id = var.tenant_id
@@ -299,6 +302,7 @@ resource "azurerm_key_vault_access_policy" "aksvault_policy_forme" {
 # https://www.terraform.io/docs/providers/azurerm/r/key_vault_secret.html
 resource "azurerm_key_vault_secret" "appinsights_secret" {
   name         = "appinsights-key"
+  depends_on   = azurerm_key_vault.aksvault
   value        = azurerm_application_insights.aksainsights.instrumentation_key
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -311,6 +315,7 @@ resource "azurerm_key_vault_secret" "appinsights_secret" {
 
 resource "azurerm_key_vault_secret" "redis_host_secret" {
   name         = "redis-host"
+  depends_on   = azurerm_key_vault.aksvault
   value        = azurerm_redis_cache.aksredis.hostname
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -323,6 +328,7 @@ resource "azurerm_key_vault_secret" "redis_host_secret" {
 
 resource "azurerm_key_vault_secret" "redis_access_secret" {
   name         = "redis-access"
+  depends_on   = azurerm_key_vault.aksvault
   value        = azurerm_redis_cache.aksredis.primary_access_key
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -335,6 +341,7 @@ resource "azurerm_key_vault_secret" "redis_access_secret" {
 
 resource "azurerm_key_vault_secret" "acrname_secret" {
   name         = "acr-name"
+  depends_on   = azurerm_key_vault.aksvault
   value        = azurerm_container_registry.aksacr.name
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -347,6 +354,7 @@ resource "azurerm_key_vault_secret" "acrname_secret" {
 
 resource "azurerm_key_vault_secret" "public_ip" {
   name         = "phoenix-fqdn"
+  depends_on   = azurerm_key_vault.aksvault
   value        = "${azurerm_public_ip.nginx_ingress.ip_address}.xip.io"
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -359,6 +367,7 @@ resource "azurerm_key_vault_secret" "public_ip" {
 
 resource "azurerm_key_vault_secret" "appgw_public_ip" {
   name         = "appgw-fqdn"
+  depends_on   = azurerm_key_vault.aksvault
   value        = "${azurerm_public_ip.appgw_ip.ip_address}.xip.io"
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -371,6 +380,7 @@ resource "azurerm_key_vault_secret" "appgw_public_ip" {
 
 resource "azurerm_key_vault_secret" "phoenix-namespace" {
   name         = "phoenix-namespace"
+  depends_on   = azurerm_key_vault.aksvault
   value        = "calculator"
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -383,6 +393,7 @@ resource "azurerm_key_vault_secret" "phoenix-namespace" {
 
 resource "azurerm_key_vault_secret" "aks-name" {
   name         = "aks-name"
+  depends_on   = azurerm_key_vault.aksvault
   value        = azurerm_kubernetes_cluster.akstf.name
   key_vault_id = azurerm_key_vault.aksvault.id
   
@@ -395,6 +406,7 @@ resource "azurerm_key_vault_secret" "aks-name" {
 
 resource "azurerm_key_vault_secret" "aks-group" {
   name         = "aks-group"
+  depends_on   = azurerm_key_vault.aksvault
   value        = azurerm_resource_group.aksrg.name
   key_vault_id = azurerm_key_vault.aksvault.id
   
