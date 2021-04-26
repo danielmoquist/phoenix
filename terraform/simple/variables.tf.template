@@ -45,7 +45,7 @@ variable "azdo_service_principal_objectid" {
 
 # Name your environment
 variable "environment" {
-    default = "dennis"
+    default = "ubidds"
 }
 
 # Kubernetes Version
