@@ -1,6 +1,6 @@
 # https://www.terraform.io/docs/providers/azurerm/d/resource_group.html
 resource "azurerm_resource_group" "aksrg" {
-  name     = "${var.resource_group_name}_${random_integer.random_int.result}"
+  name     = "rg-${var.resource_group_name}-${random_integer.random_int.result}"
   location = var.location
     
   tags = {
@@ -439,7 +439,7 @@ resource "azurerm_kubernetes_cluster" "akstf" {
   resource_group_name = azurerm_resource_group.aksrg.name
   dns_prefix          = var.dns_prefix
   # kubernetes_version  = var.kubernetes_version
-  node_resource_group = "${azurerm_resource_group.aksrg.name}_nodes"
+  node_resource_group = "${azurerm_resource_group.aksrg.name}-nodes"
   linux_profile {
     admin_username = "phoenix"
 

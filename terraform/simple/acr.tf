@@ -17,7 +17,7 @@ resource "random_integer" "random_int" {
 
 # https://www.terraform.io/docs/providers/azurerm/d/resource_group.html
 resource "azurerm_resource_group" "acrrg" {
-  name     = "${var.resource_group_name}_${random_integer.random_int.result}"
+  name     = "rg-${var.resource_group_name}-${random_integer.random_int.result}"
   location = var.location
     
   tags = {
@@ -47,7 +47,7 @@ resource "azurerm_role_assignment" "azdoacrrole" {
 # https://www.terraform.io/docs/providers/azurerm/r/container_registry.html
 
 resource "azurerm_container_registry" "aksacr" {
-  name                     = "acrubidds001"
+  name                     = "acrubidds"
   resource_group_name      = azurerm_resource_group.acrrg.name
   location                 = azurerm_resource_group.acrrg.location
   sku                      = "Standard"
