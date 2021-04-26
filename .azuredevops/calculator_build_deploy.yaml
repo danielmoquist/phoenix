@@ -7,7 +7,7 @@ pool:
 variables:
   azureSubscriptionConnectionName: 'defaultAzure'
   helmVersion: 3.1.2
-  AZURE_CONTAINER_REGISTRY_NAME: 'dzenixacr'
+  AZURE_CONTAINER_REGISTRY_NAME: 'acrubidds001'
 
 stages:
 - stage: Build
@@ -46,7 +46,7 @@ stages:
     displayName: run dev1
     environment: dev1
     variables:
-      AZURE_KEYVAULT_NAME: 'dzenix-925-vault'
+      AZURE_KEYVAULT_NAME: 'kv-ubi-dds-test-356'
     strategy:
      runOnce:
          deploy:
@@ -97,7 +97,7 @@ stages:
     displayName: run prod1
     environment: prod1
     variables:
-      AZURE_KEYVAULT_NAME: 'dzenix-940-vault'
+      AZURE_KEYVAULT_NAME: 'kv-ubi-dds-test-356'
     strategy:
      runOnce:
          deploy:
