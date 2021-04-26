@@ -4,8 +4,8 @@ resource "azurerm_resource_group" "aksrg" {
   location = var.location
     
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -20,8 +20,8 @@ resource "azurerm_key_vault" "aksvault" {
   sku_name = "standard"
 
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -33,8 +33,8 @@ resource "azurerm_virtual_network" "kubevnet" {
   resource_group_name = azurerm_resource_group.aksrg.name
 
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -161,8 +161,8 @@ resource "azurerm_key_vault_secret" "tfm-blue-ip" {
   value        = azurerm_public_ip.tfm-blue.ip_address
   key_vault_id = azurerm_key_vault.aksvault.id
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -182,8 +182,8 @@ resource "azurerm_key_vault_secret" "tfm-green-ip" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -218,8 +218,8 @@ resource "azurerm_traffic_manager_profile" "tfmprofile" {
   }
 
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -232,8 +232,8 @@ resource "azurerm_key_vault_secret" "tfm_name" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -246,8 +246,8 @@ resource "azurerm_application_insights" "aksainsights" {
   resource_group_name = azurerm_resource_group.aksrg.name
 
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -265,8 +265,8 @@ resource "azurerm_redis_cache" "aksredis" {
   }
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -307,8 +307,8 @@ resource "azurerm_key_vault_secret" "appinsights_secret" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -320,8 +320,8 @@ resource "azurerm_key_vault_secret" "redis_host_secret" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -333,8 +333,8 @@ resource "azurerm_key_vault_secret" "redis_access_secret" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -346,8 +346,8 @@ resource "azurerm_key_vault_secret" "acrname_secret" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -359,8 +359,8 @@ resource "azurerm_key_vault_secret" "public_ip" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -372,8 +372,8 @@ resource "azurerm_key_vault_secret" "appgw_public_ip" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -385,8 +385,8 @@ resource "azurerm_key_vault_secret" "phoenix-namespace" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -398,8 +398,8 @@ resource "azurerm_key_vault_secret" "aks-name" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -411,8 +411,8 @@ resource "azurerm_key_vault_secret" "aks-group" {
   key_vault_id = azurerm_key_vault.aksvault.id
   
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -425,8 +425,8 @@ resource "azurerm_log_analytics_workspace" "akslogs" {
   sku                 = "PerGB2018"
 
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -502,8 +502,8 @@ resource "azurerm_kubernetes_cluster" "akstf" {
   }
 
   tags = {
-    environment = "Test"
-    project     = "DDS"
+    Environment = "Test"
+    Project     = "DDS"
     CostCenter  = "Unibake"
   }
 }
@@ -621,7 +621,7 @@ output "KUBE_GROUP" {
 }
 
 output "NODE_GROUP" {
-  value = "${azurerm_resource_group.aksrg.name}_nodes_${azurerm_resource_group.aksrg.location}"
+  value = "${azurerm_resource_group.aksrg.name}-nodes"
 }
 
 output "ID" {
